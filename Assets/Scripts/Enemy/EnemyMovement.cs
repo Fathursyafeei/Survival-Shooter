@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿ using UnityEngine;
 using System.Collections;
 
 public class EnemyMovement : MonoBehaviour
@@ -8,7 +8,7 @@ public class EnemyMovement : MonoBehaviour
     EnemyHealth enemyHealth;
     UnityEngine.AI.NavMeshAgent nav;
 
-    private void Awake()
+    void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform; // Cari game object dengan tag player.
 
@@ -18,10 +18,10 @@ public class EnemyMovement : MonoBehaviour
         nav = GetComponent<UnityEngine.AI.NavMeshAgent>();
     }
 
-    private void Update()
+    void Update()
     {
         // Memindahkan posisi player
-        if(enemyHealth.currentHealth > 0 && playerHealth.currentHealth > 0)
+        if(enemyHealth.currentHealth > 0 && playerHealth.currentHealth> 0)
         {
             nav.SetDestination(player.position);
         }
@@ -30,5 +30,9 @@ public class EnemyMovement : MonoBehaviour
         {
             nav.enabled = false;
         }
+
+        
     }
+
+   
 }
