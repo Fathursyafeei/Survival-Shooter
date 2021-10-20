@@ -7,7 +7,11 @@ public class EnemyManager : MonoBehaviour
     public float spawnTime = 3f;
     public Transform[] spawnPoints;
 
-    private void Start()
+    [SerializeField]
+    EnemyFactory factory;
+    IFactory Factory { get { return factory as IFactory; } }
+
+    void Start()
     {
         // Mengeksekusi fungsi Spawn setiap beberapa detik sesuai nilai spawnTime
         InvokeRepeating("Spawn", spawnTime, spawnTime);
@@ -23,10 +27,13 @@ public class EnemyManager : MonoBehaviour
 
         // Get nilai Random
         int spawnPointIndex = Random.Range(0, spawnPoints.Length);
+        int spawnEnemy = Random.Range(0, 3);
 
         // Menduplikasi enemy
-        Instantiate(enemy, spawnPoints[spawnPointIndex].position, spawnPoints[spawnPointIndex].rotation);
+        Factory.FactoryMethod(spawnEnemy);
+        
     }
+    
 }
 
 

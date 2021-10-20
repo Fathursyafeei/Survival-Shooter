@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 1624909621922940934}
   - component: {fileID: 6576022268104038574}
   m_Layer: 0
-  m_Name: ZomBear 1
+  m_Name: ZomBear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -245,7 +245,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 100
-  currentHealth: 0
+  currentHealth: 100
   sinkSpeed: 2.5
   scoreValue: 10
   deathClip: {fileID: 8300000, guid: 62366b8d2c37a49dca550841c741317f, type: 3}
