@@ -6,143 +6,63 @@ public class EnemyAttack : MonoBehaviour
     public float timeBetweenAttacks = 0.5f;
     public int attackDamage = 10;
 
+
     Animator anim;
     GameObject player;
     PlayerHealth playerHealth;
-    EnemyHealth enemyHealth;
+    //EnemyHealth enemyHealth;
     bool playerInRange;
     float timer;
 
-    private void Awake()
+
+    void Awake ()
     {
-        player = GameObject.FindGameObjectWithTag("Player"); // Mencari game object dengan tag "Player"
-
-        playerHealth = player.GetComponent<PlayerHealth>(); // Mendapatkan komponen player health/
-
-        //Mendapatkan komponen Animator
-        anim = GetComponent<Animator>();
-        enemyHealth = GetComponent<EnemyHealth>();
-
+        player = GameObject.FindGameObjectWithTag ("Player");
+        playerHealth = player.GetComponent <PlayerHealth> ();
+        //enemyHealth = GetComponent<EnemyHealth>();
+        anim = GetComponent <Animator> ();
     }
 
-
-    // Callback jika ada suatu object masuk kedalam trigger
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter (Collider other)
     {
-        // Set player in range
-        if(other.gameObject == player)
+        if(other.gameObject == player && other.isTrigger == false)
         {
             playerInRange = true;
         }
     }
 
-
-    // Callback jika ada yang keluar dari trigger
-    private void OnTriggerExit(Collider other)
+    void OnTriggerExit (Collider other)
     {
-        // Set player not in range
         if(other.gameObject == player)
         {
             playerInRange = false;
         }
     }
 
-    private void Update()
+
+    void Update ()
     {
         timer += Time.deltaTime;
-        if(timer >= timeBetweenAttacks && playerInRange && enemyHealth.currentHealth > 0 )
+
+        if(timer >= timeBetweenAttacks && playerInRange/* && enemyHealth.currentHealth > 0*/)
         {
-            Attack();
+            Attack ();
         }
 
-        // Mentrigger animasi PlayerDead jika darah player kurang dari sama dengan 0
-        if(playerHealth.currentHealth <= 0)
+        if (playerHealth.currentHealth <= 0)
         {
-            anim.SetTrigger("PlayerDead");
+            anim.SetTrigger ("PlayerDead");
         }
     }
 
-    void Attack()
+
+    void Attack ()
     {
-        // Reset timer.
         timer = 0f;
 
-        // Taking Damage.
-        if(playerHealth.currentHealth > 0)
+        if (playerHealth.currentHealth > 0)
         {
             playerHealth.TakeDamage (attackDamage);
         }
     }
-
-
-
-
-
-
-
-
-
-
-    //public float timeBetweenAttacks = 0.5f;
-    //public int attackDamage = 10;
-
-
-    //Animator anim;
-    //GameObject player;
-    //PlayerHealth playerHealth;
-    ////EnemyHealth enemyHealth;
-    //bool playerInRange;
-    //float timer;
-
-
-    //void Awake ()
-    //{
-    //    player = GameObject.FindGameObjectWithTag ("Player");
-    //    playerHealth = player.GetComponent <PlayerHealth> ();
-    //    //enemyHealth = GetComponent<EnemyHealth>();
-    //    anim = GetComponent <Animator> ();
-    //}
-
-    //void OnTriggerEnter (Collider other)
-    //{
-    //    if(other.gameObject == player && other.isTrigger == false)
-    //    {
-    //        playerInRange = true;
-    //    }
-    //}
-
-    //void OnTriggerExit (Collider other)
-    //{
-    //    if(other.gameObject == player)
-    //    {
-    //        playerInRange = false;
-    //    }
-    //}
-
-
-    //void Update ()
-    //{
-    //    timer += Time.deltaTime;
-
-    //    if(timer >= timeBetweenAttacks && playerInRange/* && enemyHealth.currentHealth > 0*/)
-    //    {
-    //        Attack ();
-    //    }
-
-    //    if (playerHealth.currentHealth <= 0)
-    //    {
-    //        anim.SetTrigger ("PlayerDead");
-    //    }
-    //}
-
-
-    //void Attack ()
-    //{
-    //    timer = 0f;
-
-    //    if (playerHealth.currentHealth > 0)
-    //    {
-    //        playerHealth.TakeDamage (attackDamage);
-    //    }
-    //}
 }

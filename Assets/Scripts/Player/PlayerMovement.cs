@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -13,56 +11,67 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        floorMask = LayerMask.GetMask("Floor"); //Mendapatkan nilai mask dari layer yang bernama Floor
+        //mendapatkan nilai mask dari layer yang bernama Floor
+        floorMask = LayerMask.GetMask("Floor");
 
-        anim = GetComponent<Animator>(); // Mendapatkan komponen Animator
-        
-        playerRigidbody = GetComponent<Rigidbody>(); // Mendapatkan komponen Rigidbody
+        //Mendapatkan komponen Animator
+        anim = GetComponent<Animator>();
+
+        //Mendapatkan komponen Rigidbody
+        playerRigidbody = GetComponent<Rigidbody>();
     }
 
     private void FixedUpdate()
     {
-        float h = Input.GetAxisRaw("Horizontal");  // Mendapatkan nilai input horizontal (-1,0,1)
+        //Mendapatkan nilai input horizontal (-1,0,1)
+        float h = Input.GetAxisRaw("Horizontal");
 
-        float v = Input.GetAxisRaw("Vertical"); // Mendapatkan nilai input vertical (-1,0,1)
+        //Mendapatkan nilai input vertical (-1,0,1)
+        float v = Input.GetAxisRaw("Vertical");
 
-        Move(h, v);
         Move(h, v);
         Turning();
         Animating(h, v);
     }
-
-    //Method player dapat berjalan
-    void Move(float h, float v)
-    {  
-        movement.Set(h, 0f, v); // Set nilai x dan y
-  
-        movement = movement.normalized * speed * Time.deltaTime; // Menormalisasi nilai vector agar total panjang dari vector adalah 1
-
-        playerRigidbody.MovePosition(transform.position + movement); //Move to position
-    }
-
     void Turning()
     {
-        Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition); // Buat Ray dari posisi mouse di layar
+        //Buat Ray dari posisi mouse di layar
+        Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        RaycastHit floorHit; // Buat raycast untuk floorHit
+        //Buat raycast untuk floorHit
+        RaycastHit floorHit;
 
         //Lakukan raycast
         if (Physics.Raycast(camRay, out floorHit, camRayLength, floorMask))
         {
-            Vector3 playerToMouse = floorHit.point - transform.position; // Mendapatkan vector daro posisi player dan posisi floorHit
+            //Mendapatkan vector daro posisi player dan posisi floorHit
+            Vector3 playerToMouse = floorHit.point - transform.position;
             playerToMouse.y = 0f;
 
-            Quaternion newRotation = Quaternion.LookRotation(playerToMouse); //Mendapatkan look rotation baru ke hit position
+            //Mendapatkan look rotation baru ke hit position
+            Quaternion newRotation = Quaternion.LookRotation(playerToMouse);
 
-            playerRigidbody.MoveRotation(newRotation);  // Rotasi player
+            //Rotasi player
+            playerRigidbody.MoveRotation(newRotation);
         }
     }
 
-    void Animating(float h, float v)
+    public void Animating(float h, float v)
     {
         bool walking = h != 0f || v != 0f;
         anim.SetBool("IsWalking", walking);
+    }
+
+    //Method player dapat berjalan
+    public void Move(float h, float v)
+    {
+        //Set nilai x dan y
+        movement.Set(h, 0f, v);
+
+        //Menormalisasi nilai vector agar total panjang dari vector adalah 1
+        movement = movement.normalized * speed * Time.deltaTime;
+
+        //Move to position
+        playerRigidbody.MovePosition(transform.position + movement);
     }
 }
