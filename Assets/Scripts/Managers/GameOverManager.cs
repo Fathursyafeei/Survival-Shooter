@@ -10,12 +10,13 @@ public class GameOverManager : MonoBehaviour
 
 
     Animator anim;                          
-    float restartTimer;                    
-
+    float restartTimer;
+    bool isDead = false;
 
     void Awake()
     {
         anim = GetComponent<Animator>();
+        
     }
 
 
@@ -23,7 +24,12 @@ public class GameOverManager : MonoBehaviour
     {
         if (playerHealth.currentHealth <= 0)
         {
-            anim.SetTrigger("GameOver");
+            if (!isDead)
+            {
+                anim.SetTrigger("GameOver");
+                isDead = true;
+            }
+
 
             restartTimer += Time.deltaTime;
 
@@ -38,5 +44,7 @@ public class GameOverManager : MonoBehaviour
     {
         warningText.text = string.Format("! {0} m", Mathf.RoundToInt(enemyDistance));
         anim.SetTrigger("Warning");
+        
     }
+    
 }

@@ -12,6 +12,10 @@ public class PlayerDetector : MonoBehaviour
         {
             float enemyDistance = Vector3.Distance(transform.position, other.transform.position);
             gameOverManager.ShowWarning(enemyDistance);
+            
+
         }
+
+        
     }
 }

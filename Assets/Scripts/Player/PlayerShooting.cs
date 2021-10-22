@@ -20,7 +20,7 @@ public class PlayerShooting : MonoBehaviour
     {
         shootableMask = LayerMask.GetMask("Shootable");
         gunParticles = GetComponent<ParticleSystem>();
-        gunLine = GetComponent<LineRenderer>();
+        gunLine = FindObjectOfType<LineRenderer>();
         gunAudio = GetComponent<AudioSource>();
         gunLight = GetComponent<Light>();
     }
@@ -78,5 +78,7 @@ public class PlayerShooting : MonoBehaviour
         {
             gunLine.SetPosition(1, shootRay.origin + shootRay.direction * range);
         }
+
+       
     }
 }
